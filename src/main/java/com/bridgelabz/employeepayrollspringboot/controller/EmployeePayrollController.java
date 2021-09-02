@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("employeepayrollservice")
 public class EmployeePayrollController {
+
     @Autowired
     private IEmployeePayrollService employeePayrollService;
 
@@ -39,7 +40,8 @@ public class EmployeePayrollController {
     {
         EmployeePayrollData employeePayrollData = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
         ResponceDTO responseDTO = new ResponceDTO("Created Employee Payroll Data Successfully : ", employeePayrollData);
-        return new ResponseEntity<ResponceDTO>(responseDTO, HttpStatus.OK);    }
+        return new ResponseEntity<ResponceDTO>(responseDTO, HttpStatus.OK);
+    }
 
     @PutMapping("/update/{empId}")
     public ResponseEntity<ResponceDTO> updateEmployeePayrollData(@PathVariable("empId") int empId,@RequestBody EmployeePayrollDTO employeePayrollDTO)
