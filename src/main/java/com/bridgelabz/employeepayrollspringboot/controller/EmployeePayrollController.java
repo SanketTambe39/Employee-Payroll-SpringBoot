@@ -1,6 +1,8 @@
 package com.bridgelabz.employeepayrollspringboot.controller;
 
 import com.bridgelabz.employeepayrollspringboot.dto.EmployeePayrollDTO;
+import com.bridgelabz.employeepayrollspringboot.dto.ResponceDTO;
+import com.bridgelabz.employeepayrollspringboot.model.EmployeePayrollData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("employeepayrollservice")
 public class EmployeePayrollController {
     @RequestMapping(value = {"","/","/get"})
-    public ResponseEntity<String> getEmployeePayrollData()
+    public ResponseEntity<ResponceDTO> getEmployeePayrollData()
     {
-        return new ResponseEntity<String>("Get Call Success: ", HttpStatus.OK);
+        EmployeePayrollDTO employeePayrollDTO = new EmployeePayrollDTO("Sanket", 500000);
+        EmployeePayrollData employeePayrollData = new EmployeePayrollData(1,employeePayrollDTO);
+        ResponceDTO responceDTO =  new ResponceDTO("Get Call Success : ", employeePayrollData);
+        return new ResponseEntity<ResponceDTO>(responceDTO, HttpStatus.OK);
     }
 
     @GetMapping("/get/{empId}")
