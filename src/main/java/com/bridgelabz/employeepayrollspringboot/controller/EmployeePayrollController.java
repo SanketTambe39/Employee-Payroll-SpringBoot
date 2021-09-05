@@ -4,6 +4,7 @@ import com.bridgelabz.employeepayrollspringboot.dto.EmployeePayrollDTO;
 import com.bridgelabz.employeepayrollspringboot.dto.ResponceDTO;
 import com.bridgelabz.employeepayrollspringboot.model.EmployeePayrollData;
 import com.bridgelabz.employeepayrollspringboot.services.IEmployeePayrollService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("employeepayrollservice")
+@Slf4j
+@RequestMapping("employeepayroll")
 public class EmployeePayrollController {
 
     @Autowired
     private IEmployeePayrollService employeePayrollService;
 
-    @RequestMapping(value = {"","/","/get"})
+    @GetMapping("/employees")
     public ResponseEntity<ResponceDTO> getEmployeePayrollData()
     {
         List<EmployeePayrollData> employeeDataList = null;
@@ -28,7 +30,7 @@ public class EmployeePayrollController {
         return new ResponseEntity<ResponceDTO>(responceDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/get/{empId}")
+    @GetMapping("/employee/{empId}")
     public ResponseEntity<ResponceDTO> getEmployeePayrollData(@PathVariable("empId") int empId)
     {
         EmployeePayrollData employeePayrollData = employeePayrollService.getEmployeePayrollDataById(empId);
@@ -39,6 +41,7 @@ public class EmployeePayrollController {
     @PostMapping("/create")
     public ResponseEntity<ResponceDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO)
     {
+        log.debug("Employee DTO: " + employeePayrollDTO.toString());
         EmployeePayrollData employeePayrollData = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
         ResponceDTO responseDTO = new ResponceDTO("Created Employee Payroll Data Successfully : ", employeePayrollData);
         return new ResponseEntity<ResponceDTO>(responseDTO, HttpStatus.OK);
